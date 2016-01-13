@@ -1,0 +1,6 @@
+gnltest
+.~*
+.DS*
+*.dSYM
+*.o
+*.a
