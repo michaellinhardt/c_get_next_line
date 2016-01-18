@@ -6,14 +6,15 @@
 #    By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/13 20:28:51 by mlinhard          #+#    #+#              #
-#    Updated: 2016/01/13 20:29:02 by mlinhard         ###   ########.fr        #
+#    Updated: 2016/01/18 19:58:31 by mlinhard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= 	gnltest
 FLAGS	=	-Wall -Wextra -Werror -g
 
-SRCS	=	main.c
+SRCS	=	main.c \
+			get_next_line.c
 
 HDIR 	=	./includes/
 LDIR 	= 	./libft/

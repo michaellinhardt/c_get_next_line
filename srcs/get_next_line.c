@@ -1,40 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/18 20:26:19 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/18 20:21:51 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void print_gnl(t_gnl *gnl)
+static t_gnl	*gnl_init(int fd)
 {
-	while (gnl->next)
+	static t_gnl	*root;
+	t_gnl			*gnl;
+	t_gnl			*next;
+
+	if (!root)
 	{
-		printf("%d: %s\n", gnl->fd, gnl->tmp);
-		gnl = gnl->next;
+		if (!(root = (t_gnl *)malloc(sizeof(t_gnl))))
+			return ((t_gnl *)NULL);
+		root->fd = fd;
 	}
-	printf("%d: %s\n", gnl->fd, gnl->tmp);
+	gnl = root;
+	while (gnl->fd != fd && gnl->next)
+		gnl = gnl->next;
+	if (gnl->fd != fd)
+	{
+		if (!(next = (t_gnl *)malloc(sizeof(t_gnl))))
+			return ((t_gnl *)NULL);
+		next->fd = fd;
+		gnl->next = next;
+		return (next);
+	}
+	return (gnl);
 }
 
-int		main(void)
+t_gnl			*get_next_line(int fd)
 {
 	t_gnl	*gnl;
 
-	gnl = get_next_line(1);
-	gnl = get_next_line(1);
-	gnl = get_next_line(2);
-	gnl = get_next_line(2);
-	gnl = get_next_line(3);
-	gnl = get_next_line(5);
-	gnl = get_next_line(4);
-	gnl = get_next_line(1);
-	print_gnl(gnl);
-
-	return (0);
+	if (!(gnl = gnl_init(fd)))
+		return ((t_gnl *)NULL);
+	fd++;
+	return (gnl);
 }
