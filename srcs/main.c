@@ -6,14 +6,16 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/18 20:26:19 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/18 22:10:50 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void print_gnl(t_gnl *gnl)
+static void gnl_print(t_gnl *gnl)
 {
+	if (!gnl)
+		return ;
 	while (gnl->next)
 	{
 		printf("%d: %s\n", gnl->fd, gnl->tmp);
@@ -24,17 +26,21 @@ static void print_gnl(t_gnl *gnl)
 
 int		main(void)
 {
-	t_gnl	*gnl;
+	t_gnl	*gnl = NULL;
+	char	*line = NULL;
+	int		fd;
 
-	gnl = get_next_line(1);
-	gnl = get_next_line(1);
-	gnl = get_next_line(2);
-	gnl = get_next_line(2);
-	gnl = get_next_line(3);
-	gnl = get_next_line(5);
-	gnl = get_next_line(4);
-	gnl = get_next_line(1);
-	print_gnl(gnl);
+	fd = open("./files/5lignes", O_RDONLY);
+
+	get_next_line(fd, &line);
+	printf("call1: %s\n", line);
+
+	get_next_line(fd, &line);
+	printf("call2: %s\n", line);
+	
+	free(line);
+	get_next_line(-10, (char**)NULL);
 
 	return (0);
+	gnl_print(gnl);
 }

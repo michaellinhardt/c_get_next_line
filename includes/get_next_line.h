@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:52:53 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/18 20:21:08 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/18 22:09:39 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include <stdio.h>
 
 # include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
 # include "libft.h"
-# define BUF_SIZE 21
+# define BUFF_SIZE 1
 
 typedef struct		s_gnl
 {
@@ -26,6 +28,6 @@ typedef struct		s_gnl
 	struct s_gnl	*next;
 }					t_gnl;
 
-t_gnl		*get_next_line(int fd);
+int					get_next_line(int fd, char **line);
 
 #endif
