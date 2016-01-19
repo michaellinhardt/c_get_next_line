@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_newjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/03 18:44:30 by mlinhard          #+#    #+#             */
-/*   Updated: 2015/12/17 21:46:40 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/19 21:19:54 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		return (NULL);
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
-	if (!(new = ft_strnew(len_s1 + len_s2)))
+	if (!(new = ft_strnew(len_s1 + len_s2 + 1)))
 		return (NULL);
 	ft_memcpy(new, s1, len_s1);
 	ft_memcpy(new + len_s1, s2, len_s2);
