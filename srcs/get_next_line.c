@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/19 21:23:31 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/20 17:03:19 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static t_gnl	*gnl_init(int fd)
 		if (!(root = (t_gnl *)malloc(sizeof(t_gnl))))
 			return ((t_gnl *)NULL);
 		root->fd = fd;
+		root->end = -1;
+		root->start = 0;
 		root->next = NULL;
 		if (!(root->s = ft_strnew(0)))
 			return ((t_gnl *)NULL);
@@ -37,6 +39,8 @@ static t_gnl	*gnl_init(int fd)
 		if (!(next = (t_gnl *)malloc(sizeof(t_gnl))))
 			return ((t_gnl *)NULL);
 		next->fd = fd;
+		next->end = -1;
+		next->start = 0;
 		next->next = NULL;
 		if (!(next->s = ft_strnew(0)))
 			return ((t_gnl *)NULL);
@@ -81,14 +85,19 @@ int				get_next_line(int fd, char **line)
 		return (-1);
 	if (*line)
 		free(*line);
-	while (!(ft_strchr(g->s, '\n')) && (r = read(fd, buff, BUFF_SIZE)) > 0)
+	while ((r = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[r] = '\0';
 		tmp = ft_strdup(g->s);
 		free(g->s);
 		g->s = ft_strjoin(tmp, buff);
 		free(tmp);
-		printf("g->s: %s\n", g->s);
 	}
-	return (0);
+	g->start = (g->end + 1);
+	while (g->s[++g->end] && g->s[g->end] != '\n' && g->s[g->end] != '\0')
+		;
+	if (g->s[(g->end)] == '\0')
+		return (0);
+	*line = ft_strsub(g->s, g->start, (g->end - g->start));
+	return (1);
 }
