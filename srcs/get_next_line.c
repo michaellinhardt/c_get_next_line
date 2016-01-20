@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/20 17:03:19 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/20 17:17:10 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int				get_next_line(int fd, char **line)
 	g->start = (g->end + 1);
 	while (g->s[++g->end] && g->s[g->end] != '\n' && g->s[g->end] != '\0')
 		;
-	if (g->s[(g->end)] == '\0')
+	if (g->s[(g->end)] == '\0' && (g->end - g->start) < 1)
 		return (0);
 	*line = ft_strsub(g->s, g->start, (g->end - g->start));
 	return (1);
