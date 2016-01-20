@@ -6,28 +6,41 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/20 17:17:10 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/20 20:53:48 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static int		gnl_init_one(t_gnl *gnl, int fd)
+{
+	if (fd > -100)
+	{
+		if (!(gnl->s = ft_strnew(0)))
+			return (1);
+	}
+	else
+		gnl->s = NULL;
+	gnl->fd = fd;
+	gnl->next = NULL;
+	gnl->end = -1;
+	gnl->start = 0;
+	return (0);
+}
+
 static t_gnl	*gnl_init(int fd)
 {
 	static t_gnl	*root;
 	t_gnl			*gnl;
-	t_gnl			*next;
+	t_gnl			*n;
 
+	if (fd == -200 && !(root = NULL))
+		return ((t_gnl *)NULL);
 	if (!root)
 	{
 		if (!(root = (t_gnl *)malloc(sizeof(t_gnl))))
 			return ((t_gnl *)NULL);
-		root->fd = fd;
-		root->end = -1;
-		root->start = 0;
-		root->next = NULL;
-		if (!(root->s = ft_strnew(0)))
-			return ((t_gnl *)NULL);
+		gnl_init_one(root, -100);
 	}
 	if (fd == -10)
 		return (root);
@@ -36,16 +49,10 @@ static t_gnl	*gnl_init(int fd)
 		gnl = gnl->next;
 	if (gnl->fd != fd)
 	{
-		if (!(next = (t_gnl *)malloc(sizeof(t_gnl))))
+		if (!(n = (t_gnl *)malloc(sizeof(t_gnl))) || (gnl_init_one(n, fd)))
 			return ((t_gnl *)NULL);
-		next->fd = fd;
-		next->end = -1;
-		next->start = 0;
-		next->next = NULL;
-		if (!(next->s = ft_strnew(0)))
-			return ((t_gnl *)NULL);
-		gnl->next = next;
-		gnl = next;
+		gnl->next = n;
+		gnl = n;
 	}
 	return (gnl);
 }
@@ -64,40 +71,63 @@ static int		gnl_free(void)
 			free(destroy->s);
 		free(destroy);
 	}
+	if (gnl->fd > -100 && gnl->s)
+		free(gnl->s);
+	free(gnl);
+	gnl_init(-200);
+	return (0);
+}
+
+static int		gnl_free_one(int fd)
+{
+	t_gnl	*gnl;
+	t_gnl	*prev;
+	t_gnl	*next;
+
+	gnl = gnl_init(-10);
+	prev = NULL;
+	next = (gnl->next) ? gnl->next : NULL;
+	while (gnl->fd != fd)
+	{
+		prev = gnl;
+		gnl = gnl->next;
+		next = gnl->next;
+	}
 	if (gnl->s)
 		free(gnl->s);
 	free(gnl);
+	if (prev)
+		prev->next = next;
+	gnl = gnl_init(-10);
+	if (!gnl->next)
+		gnl_free();
 	return (0);
 }
 
 int				get_next_line(int fd, char **line)
 {
 	t_gnl	*g;
-	char	buff[BUFF_SIZE + 1];
-	char	*tmp;
-	int		r;
 
-	if (fd == -10)
-		return (gnl_free());
-	if (fd < 1 || !(line) || read(fd, buff, 0) < 0 || BUFF_SIZE < 1)
-		return (-1);
-	if (!(g = gnl_init(fd)))
-		return (-1);
 	if (*line)
 		free(*line);
-	while ((r = read(fd, buff, BUFF_SIZE)) > 0)
+	if (!(*line = NULL) && fd == -10)
+		return (gnl_free());
+	if (!(g = gnl_init(fd)) || fd < 1 || !(line) || 
+		read(fd, g->b, 0) < 0 || BUFF_SIZE < 1)
+		return (-1);
+	while ((g->r = read(fd, g->b, BUFF_SIZE)) > 0)
 	{
-		buff[r] = '\0';
-		tmp = ft_strdup(g->s);
+		g->b[g->r] = '\0';
+		g->t = ft_strdup(g->s);
 		free(g->s);
-		g->s = ft_strjoin(tmp, buff);
-		free(tmp);
+		g->s = ft_strjoin(g->t, g->b);
+		free(g->t);
 	}
 	g->start = (g->end + 1);
 	while (g->s[++g->end] && g->s[g->end] != '\n' && g->s[g->end] != '\0')
 		;
 	if (g->s[(g->end)] == '\0' && (g->end - g->start) < 1)
-		return (0);
+		return (gnl_free_one(fd));
 	*line = ft_strsub(g->s, g->start, (g->end - g->start));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:52:53 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/20 17:05:11 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/20 20:25:42 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ typedef struct		s_gnl
 	char			*s;
 	int				start;
 	int				end;
+	char			b[BUFF_SIZE + 1];
+	char			*t;
+	int				r;
 	struct s_gnl	*next;
 }					t_gnl;
 
