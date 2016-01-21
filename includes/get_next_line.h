@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:52:53 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/20 20:25:42 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 01:50:47 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include "libft.h"
 # define BUFF_SIZE 1
+# define STR 1
 
 typedef struct		s_gnl
 {

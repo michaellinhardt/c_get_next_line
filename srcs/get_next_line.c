@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/20 20:53:48 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 02:02:12 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int				get_next_line(int fd, char **line)
 		g->t = ft_strdup(g->s);
 		free(g->s);
 		g->s = ft_strjoin(g->t, g->b);
+		g->s = (STR) ? ft_strtrim(g->s) : g->s;
 		free(g->t);
 	}
 	g->start = (g->end + 1);

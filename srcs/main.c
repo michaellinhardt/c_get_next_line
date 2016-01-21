@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 01:28:45 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 01:36:00 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ int		main(void)
 	// LE PROGRAMME A FREE TOUS DE MANIERE AUTO CAR 
 	// AUCUN FD N'ETAIS OUVERT
 	// PUIS ON ROUVRE UN NOUVEAU FD
-	fd5 = open("./files/6lignes", O_RDONLY);
+	printf("./test_maps/10-2.fdf\n");
+	fd5 = open("./test_maps/10-2.fdf", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
-		printf("6lignes, i/6, %d: %s\n", fd, line);
+		printf("10-2.fdf i, %d: %s\n", fd, line);
 
 	// ON DEMANDE UN FREE TOTAL PLUSIEURS FOIS, PAS D'ERREUR
 	get_next_line(-10, &line);
