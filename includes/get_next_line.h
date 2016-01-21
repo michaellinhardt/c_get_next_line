@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:52:53 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 05:51:16 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 05:59:59 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "libft.h"
-# define BUFF_SIZE 3
+# define BUFF_SIZE 10000
 # define MAP 0
 # define F ft_bootstrap
 
