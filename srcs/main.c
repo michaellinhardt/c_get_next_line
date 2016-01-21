@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 05:29:46 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 05:55:51 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,17 @@ int		main(void)
 	fd5 = open("./test_maps/10-2.fdf", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
 		printf("10-2.fdf i, %d:%s\n", fd, line);
-
 /*
 	// OUVERTURE DUN GROS FICHIER
 	printf("\n===== TESt GROS FICHIER =====\n");
-	printf("open('./files/6mo')\n");
-	printf("fichier texte de 6 mo\n\n");
-	fd5 = open("./files/6mo", O_RDONLY);
+	printf("open('./files/2mo')\n");
+	printf("fichier texte de 2 mo\n\n");
+	fd5 = open("./files/2mo", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
-		printf("6mo i, %d:%s\n", fd, line);
-
+		printf("2mo i, %d:%s\n", fd, line);
+*/
 	// ON DEMANDE UN FREE TOTAL PLUSIEURS FOIS, PAS D'ERREUR
 	get_next_line(-10, &line);
-	get_next_line(-10, &line);
-*/
-
-	// DEMANDE UN FREE TOTAL
 	get_next_line(-10, &line);
 
 	return (0);

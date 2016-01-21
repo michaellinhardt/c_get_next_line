@@ -6,12 +6,12 @@
 #    By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/13 20:28:51 by mlinhard          #+#    #+#              #
-#    Updated: 2016/01/21 05:28:52 by mlinhard         ###   ########.fr        #
+#    Updated: 2016/01/21 05:45:47 by mlinhard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= 	gnltest
-FLAGS	=	-Wall -Wextra -Werror -g
+FLAGS	=	-Wall -Wextra -Werror
 
 SRCS	=	main.c \
 			get_next_line.c
@@ -57,12 +57,12 @@ fclean: clean
 
 re: fclean all
 
-test: re all
+test: re
 	@echo "$(W8) $(YE)time ./$(NAME) | /bin/cat -e$(WH)"
 	@time ./$(NAME) | /bin/cat -e
 	@echo "$(OK) $(GR)Done!$(WH)"
 
-leaks: re all -leaks
+leaks: re -leaks
 -leaks:
 	@echo "$(W8) $(YE)valgrind --leak-check=yes --track-origins=yes ./$(NAME) > ./last.valgrind 2>&1$(WH)"
 	@valgrind --leak-check=yes --track-origins=yes ./$(NAME) > ./last.valgrind 2>&1
