@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 03:00:43 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 03:01:31 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_bootstrap(char *line)
 
 	i = -1;
 	while (line[++i])
-		ft_toupper(line[i]);
+		ft_toupper(&line[i]);
 }
 
 int		main(void)
