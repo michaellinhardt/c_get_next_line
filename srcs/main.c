@@ -6,19 +6,20 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 03:01:31 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 05:29:46 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_bootstrap(char *line)
+void	ft_bootstrap(char **line)
 {
-	int		i;
+	char	*t;
 
-	i = -1;
-	while (line[++i])
-		ft_toupper(&line[i]);
+	t = ft_strdup(*line);
+	free(*line);
+	*line = ft_strtrim(ft_strtoupper(t));
+	free(t);
 }
 
 int		main(void)
@@ -33,7 +34,14 @@ int		main(void)
 
 	fd = 0; fd1 = 0; fd2 = 0; fd3= 0; fd4 = 0; fd5 = 0;
 
+	printf("\n# define BUFF_SIZE %d\n", BUFF_SIZE);
+	printf("# define MAP %d\n", MAP);
+
 	// TEST MULTI FD
+	printf("\n===== TESt MULTI FD, OUVERT ET LU DE MANIERE ALTERNE =====\n");
+	printf("* (null) = termine & maillon free\n");
+	printf("si MAP = 1, on constate leffet du strtoupper ici\n\n");
+
 	fd1 = open("./files/1lignes", O_RDONLY);
 	fd = get_next_line(fd1, &line);
 	printf("1lignes, 1/1, %d: %s\n", fd, line);
@@ -78,26 +86,29 @@ int		main(void)
 	// LE PROGRAMME A FREE TOUS DE MANIERE AUTO CAR 
 	// AUCUN FD N'ETAIS OUVERT
 	// PUIS ON ROUVRE UN NOUVEAU FD
-	printf("./test_maps/10-2.fdf\n");
+	printf("\n===== TESt FD APRES FREE TOTAL AUTO, LECTURE SUR WHILE =====\n");
+	printf("open('./test_maps/10-2.fdf')\n");
+	printf("si MAP = 1, on constate leffet du trim en fin de ligne\n\n");
 	fd5 = open("./test_maps/10-2.fdf", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
-		printf("10-2.fdf i, %d: %s\n", fd, line);
+		printf("10-2.fdf i, %d:%s\n", fd, line);
+
+/*
+	// OUVERTURE DUN GROS FICHIER
+	printf("\n===== TESt GROS FICHIER =====\n");
+	printf("open('./files/6mo')\n");
+	printf("fichier texte de 6 mo\n\n");
+	fd5 = open("./files/6mo", O_RDONLY);
+	while ((fd = get_next_line(fd5, &line)) == 1)
+		printf("6mo i, %d:%s\n", fd, line);
 
 	// ON DEMANDE UN FREE TOTAL PLUSIEURS FOIS, PAS D'ERREUR
 	get_next_line(-10, &line);
 	get_next_line(-10, &line);
-
-
-/* 
-	// TEST BASIQUE, DANS UN WHILE, FONCTIONNEMENT NORMALE
-	fd = open("./files/1lignes", O_RDONLY);
-	int		i = 0; while (get_next_line(fd, &line) == 1)
-	{
-		i++;
-		printf("call %d: %s\n", i, line);
-	}
-	printf("call %d non executé !\n", (i+1));
 */
+
+	// DEMANDE UN FREE TOTAL
+	get_next_line(-10, &line);
 
 	return (0);
 }

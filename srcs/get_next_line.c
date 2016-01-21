@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 02:58:09 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/21 05:29:40 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,14 @@ static int		gnl_free_one(int fd)
 int				get_next_line(int fd, char **line)
 {
 	t_gnl	*g;
-	void	(*f)(char *line);
+	void	(*f)(char **line);
 
 	if (*line)
 		free(*line);
 	if (!(*line = NULL) && fd == -10)
 		return (gnl_free());
-	if (!(g = gnl_init(fd)) || fd < 1 || !(line) || 
-		read(fd, g->b, 0) < 0 || BUFF_SIZE < 1)
+	if (fd < 1 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
+		read(fd, g->b, 0) < 0)
 		return (-1);
 	while ((g->r = read(fd, g->b, BUFF_SIZE)) > 0)
 	{
@@ -124,10 +124,10 @@ int				get_next_line(int fd, char **line)
 	g->start = (g->end + 1);
 	while (g->s[++g->end] && g->s[g->end] != '\n' && g->s[g->end] != '\0')
 		;
-	if (g->s[(g->end)] == '\0' && (g->end - g->start) < 1)
+	if (g->r == 0 && g->s[(g->end)] == '\0' && (g->end - g->start) < 1)
 		return (gnl_free_one(fd));
 	*line = ft_strsub(g->s, g->start, (g->end - g->start));
 	if (MAP && (f = F))
-		(f)(*line);
+		(f)(line);
 	return (1);
 }
