@@ -6,24 +6,37 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 04:45:03 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 05:05:57 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int		gnl_init_one(t_gnl *gnl, int fd)
+static int		gnl_init_one(t_gnl *g, int fd)
 {
-	if (fd > -100)
+	void	(*f)(char **line);
+
+	if (fd == -200)
 	{
-		if (!(gnl->s = ft_strnew(0)))
-			return (1);
+		*g->l = ft_strsub(g->s, 0, g->e);
+		g->t = ft_strdup(g->s);
+		free(g->s);
+		if (g->t[(g->e)] != '\0')
+			g->s = ft_strsub(g->t, (g->e + 1), (ft_strlen(g->t) - g->e - 1));
+		else
+			g->s = ft_strnew(0);
+		free(g->t);
+		if (MAP && (f = F))
+			(f)(g->l);
+		return (0);
 	}
-	else
-		gnl->s = NULL;
-	gnl->fd = fd;
-	gnl->next = NULL;
-	gnl->end = -1;
+	g->s = NULL;
+	if (fd > -100)
+		if (!(g->s = ft_strnew(0)))
+			return (1);
+	g->fd = fd;
+	g->next = NULL;
+	g->e = -1;
 	return (0);
 }
 
@@ -106,7 +119,6 @@ static int		gnl_free_one(int fd)
 int				get_next_line(int fd, char **line)
 {
 	t_gnl	*g;
-	void	(*f)(char **line);
 
 	if (*line)
 		free(*line);
@@ -123,20 +135,12 @@ int				get_next_line(int fd, char **line)
 		g->s = ft_strjoin(g->t, g->b);
 		free(g->t);
 	}
-	g->end = -1;
-	while (g->s[++g->end] && g->s[g->end] != '\n' && g->s[g->end] != '\0')
+	g->e = -1;
+	while (g->s[++g->e] && g->s[g->e] != '\n' && g->s[g->e] != '\0')
 		;
-	if (g->r == 0 && g->end == 0)
+	if (g->r == 0 && g->e == 0)
 		return (gnl_free_one(fd));
-	*line = ft_strsub(g->s, 0, g->end);
-	g->t = ft_strdup(g->s);
-	free(g->s);
-	if (g->t[(g->end)] != '\0')
-		g->s = ft_strsub(g->t, (g->end + 1), (ft_strlen(g->t) - g->end - 1));
-	else
-		g->s = ft_strnew(0);
-	free(g->t);
-	if (MAP && (f = F))
-		(f)(line);
+	g->l = line;
+	gnl_init_one(g, -200);
 	return (1);
 }
