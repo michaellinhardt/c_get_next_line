@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 07:21:17 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 07:55:31 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int		gnl_init_one(t_gnl *g, int fd)
 		else
 			g->s = ft_memalloc(1);
 		free(g->t);
-		if (MAP && (f = F))
+		if (MAPP && (f = FFF))
 			(f)(g->l);
 		return (0);
 	}
@@ -124,7 +124,7 @@ int				get_next_line(int fd, char **line)
 		free(*line);
 	if (line && !(*line = NULL) && fd == -10)
 		return (gnl_free());
-	if (fd < 1 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
+	if (fd < 0 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
 		read(fd, g->b, 0) < 0)
 		return (-1);
 	while (!(ft_strchr(g->s, '\n')) && (g->r = read(fd, g->b, BUFF_SIZE)) > 0)

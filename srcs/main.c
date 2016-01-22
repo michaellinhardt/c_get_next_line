@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 07:07:21 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 07:30:19 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int		main(void)
 	fd = 0; fd1 = 0; fd2 = 0; fd3= 0; fd4 = 0; fd5 = 0;
 
 	printf("\n# define BUFF_SIZE %d\n", BUFF_SIZE);
-	printf("# define MAP %d\n", MAP);
 
 	// TEST MULTI FD
 	printf("\n===== TESt MULTI FD, OUVERT ET LU DE MANIERE ALTERNE =====\n");
