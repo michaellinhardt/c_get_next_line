@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 06:07:12 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 03:30:23 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		main(void)
 	while ((fd = get_next_line(fd5, &line)) == 1)
 		printf("10-2.fdf i, %d:%s\n", fd, line);
 
+/*
 	// OUVERTURE DUN GROS FICHIER
 	printf("\n===== TESt GROS FICHIER =====\n");
 	printf("open('./files/1mo')\n");
@@ -100,6 +101,7 @@ int		main(void)
 	fd5 = open("./files/1mo", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
 		printf("2mo i, %d:%s\n", fd, line);
+*/
 
 	// ON DEMANDE UN FREE TOTAL PLUSIEURS FOIS, PAS D'ERREUR
 	get_next_line(-10, &line);

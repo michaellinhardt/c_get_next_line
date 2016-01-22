@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/21 05:29:40 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 03:42:46 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,3 +131,32 @@ int				get_next_line(int fd, char **line)
 		(f)(line);
 	return (1);
 }
+/*
+int				get_next_line(int fd, char **line)
+{
+	t_gnl	*g;
+	void	(*f)(char **line);
+
+	if (*line)
+		free(*line);
+	if (!(*line = NULL) && fd == -10)
+		return (gnl_free());
+	if (fd < 1 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
+		read(fd, g->b, 0) < 0)
+		return (-1);
+	while ((g->r = read(fd, g->b, BUFF_SIZE)) > 0)
+	{
+		g->b[g->r] = '\0', g->t = ft_strdup(g->s), free(g->s);
+		g->s = ft_strjoin(g->t, g->b), free(g->t);
+	}
+	g->start = (g->end + 1);
+	while (g->s[++g->end] && g->s[g->end] != '\n' && g->s[g->end] != '\0')
+		;
+	if (g->r == 0 && g->s[(g->end)] == '\0' && (g->end - g->start) < 1)
+		return (gnl_free_one(fd));
+	*line = ft_strsub(g->s, g->start, (g->end - g->start));
+	if (MAP && (f = F))
+		(f)(line);
+	return (1);
+}
+*/
