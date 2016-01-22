@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 07:55:31 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 08:03:32 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int		gnl_init_one(t_gnl *g, int fd)
 		else
 			g->s = ft_memalloc(1);
 		free(g->t);
-		if (MAPP && (f = FFF))
+		if (MAP && (f = F))
 			(f)(g->l);
 		return (0);
 	}
