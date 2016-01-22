@@ -8,6 +8,9 @@
 | repo path | description |
 | ------------- | ------------- |
 | docs/get_next_line.fr.pdf	 | subject in french				 |
-| includes			 | headers location						 |
+| files/	 | basic test file				 |
+| includes/			 | headers location						 |
 | libft/				 | libft.a project <a href="https://github.com/nesthub/c_libft" target="_blank">here</a>	 |
 | srcs/				 | .c sources							 |
+| test_maps/				 | FDF projects file to make test		 |
+| auteur				 | 42 requierement, author's login	 |
