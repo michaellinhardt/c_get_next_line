@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 05:05:57 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 07:21:17 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		gnl_init_one(t_gnl *g, int fd)
 		if (g->t[(g->e)] != '\0')
 			g->s = ft_strsub(g->t, (g->e + 1), (ft_strlen(g->t) - g->e - 1));
 		else
-			g->s = ft_strnew(0);
+			g->s = ft_memalloc(1);
 		free(g->t);
 		if (MAP && (f = F))
 			(f)(g->l);
@@ -32,7 +32,7 @@ static int		gnl_init_one(t_gnl *g, int fd)
 	}
 	g->s = NULL;
 	if (fd > -100)
-		if (!(g->s = ft_strnew(0)))
+		if (!(g->s = ft_memalloc(1)))
 			return (1);
 	g->fd = fd;
 	g->next = NULL;
@@ -120,9 +120,9 @@ int				get_next_line(int fd, char **line)
 {
 	t_gnl	*g;
 
-	if (*line)
+	if (line && *line)
 		free(*line);
-	if (!(*line = NULL) && fd == -10)
+	if (line && !(*line = NULL) && fd == -10)
 		return (gnl_free());
 	if (fd < 1 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
 		read(fd, g->b, 0) < 0)

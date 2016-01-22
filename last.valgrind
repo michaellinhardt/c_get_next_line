@@ -1,8 +1,8 @@
-==16275== Memcheck, a memory error detector
-==16275== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==16275== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
-==16275== Command: ./gnltest
-==16275== 
+==73265== Memcheck, a memory error detector
+==73265== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==73265== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==73265== Command: ./gnltest
+==73265== 
 
 # define BUFF_SIZE 8
 # define MAP 0
@@ -38,31 +38,42 @@ si MAP = 1, on constate leffet du trim en fin de ligne
 10-2.fdf i, 1:0 0 0 0 1 0 -1 0 0 0 
 10-2.fdf i, 1:-1 -1 0 1 -1 0 1 0 0 1 
 10-2.fdf i, 1:0 0 1 -1 0 -1 0 0 0 0 
-==16275== 
-==16275== HEAP SUMMARY:
-==16275==     in use at exit: 26,090 bytes in 186 blocks
-==16275==   total heap usage: 423 allocs, 237 frees, 34,976 bytes allocated
-==16275== 
-==16275== 2,064 bytes in 1 blocks are possibly lost in loss record 58 of 64
-==16275==    at 0x10000A17C: malloc_zone_malloc (in /usr/local/Cellar/valgrind/3.11.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==16275==    by 0x1004F5EFD: _objc_copyClassNamesForImage (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E9182: protocols() (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E9093: readClass(objc_class*, bool, bool) (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E6C13: gc_init (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004EE24E: objc_initializeClassPair_internal(objc_class*, char const*, objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004FB132: layout_string_create (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E983C: realizeClass(objc_class*) (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E9300: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==16275==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==16275== 
-==16275== LEAK SUMMARY:
-==16275==    definitely lost: 0 bytes in 0 blocks
-==16275==    indirectly lost: 0 bytes in 0 blocks
-==16275==      possibly lost: 2,064 bytes in 1 blocks
-==16275==    still reachable: 0 bytes in 0 blocks
-==16275==         suppressed: 24,026 bytes in 185 blocks
-==16275== 
-==16275== For counts of detected and suppressed errors, rerun with: -v
-==16275== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 18 from 18)
+
+===== TESt FD -99 et LINE = VOID =====
+open('./test_maps/10-2.fdf')
+si MAP = 1, on constate leffet du trim en fin de ligne
+
+return = -1
+
+===== CAS DERREUR REPORTER PAR 42FC =====
+open('./42fc/gnl1_2.txt')
+test i, 1:1234567
+test i, 1:abcdefg
+==73265== 
+==73265== HEAP SUMMARY:
+==73265==     in use at exit: 26,090 bytes in 186 blocks
+==73265==   total heap usage: 436 allocs, 250 frees, 35,041 bytes allocated
+==73265== 
+==73265== 2,064 bytes in 1 blocks are possibly lost in loss record 58 of 64
+==73265==    at 0x10000A17C: malloc_zone_malloc (in /usr/local/Cellar/valgrind/3.11.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==73265==    by 0x1004F5EFD: _objc_copyClassNamesForImage (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E9182: protocols() (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E9093: readClass(objc_class*, bool, bool) (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E6C13: gc_init (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004EE24E: objc_initializeClassPair_internal(objc_class*, char const*, objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004FB132: layout_string_create (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E983C: realizeClass(objc_class*) (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E9300: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==73265==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==73265== 
+==73265== LEAK SUMMARY:
+==73265==    definitely lost: 0 bytes in 0 blocks
+==73265==    indirectly lost: 0 bytes in 0 blocks
+==73265==      possibly lost: 2,064 bytes in 1 blocks
+==73265==    still reachable: 0 bytes in 0 blocks
+==73265==         suppressed: 24,026 bytes in 185 blocks
+==73265== 
+==73265== For counts of detected and suppressed errors, rerun with: -v
+==73265== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 18 from 18)

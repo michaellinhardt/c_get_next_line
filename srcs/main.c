@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 04:53:54 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/22 07:07:21 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,21 @@ int		main(void)
 	fd5 = open("./test_maps/10-2.fdf", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
 		printf("10-2.fdf i, %d:%s\n", fd, line);
+
+	printf("\n===== TESt FD -99 et LINE = VOID =====\n");
+	printf("open('./test_maps/10-2.fdf')\n");
+	printf("si MAP = 1, on constate leffet du trim en fin de ligne\n\n");
+	fd = get_next_line(-99, (void*)0);
+	printf("return = %d\n", fd);
+
+	// LE PROGRAMME A FREE TOUS DE MANIERE AUTO CAR 
+	// AUCUN FD N'ETAIS OUVERT
+	// PUIS ON ROUVRE UN NOUVEAU FD
+	printf("\n===== CAS DERREUR REPORTER PAR 42FC =====\n");
+	printf("open('./42fc/gnl1_2.txt')\n");
+	fd5 = open("./42fc/gnl1_2.txt", O_RDONLY);
+	while ((fd = get_next_line(fd5, &line)) == 1)
+		printf("test i, %d:%s\n", fd, line);
 
 /*
 	// OUVERTURE DUN GROS FICHIER
