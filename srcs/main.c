@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/24 04:36:38 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/24 04:37:37 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		main(int argc, char **argv)
 	fd5 = open("./42fc/gnl1_2.txt", O_RDONLY);
 	while ((ret = get_next_line(fd5, &line)) == 1)
 		printf("test i, %d:%s\n", ret, line), ft_strdel(&line);
-
+/*
 	// OUVERTURE DUN GROS FICHIER
 	printf("\n===== TESt GROS FICHIER =====\n");
 	printf("open('./files/1mo')\n");
@@ -121,7 +121,7 @@ int		main(int argc, char **argv)
 	fd5 = open("./files/1mo", O_RDONLY);
 	while ((ret = get_next_line(fd5, &line)) == 1)
 		printf("2mo i, %d:%s\n", ret, line), ft_strdel(&line);
-
+*/
 	// ON DEMANDE UN FREE TOTAL PLUSIEURS FOIS, PAS D'ERREUR
 	get_next_line(-10, &line);
 	get_next_line(-10, &line);
