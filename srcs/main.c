@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 08:07:37 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/24 04:12:19 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	ft_bootstrap(char **line)
 	free(t);
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
-	char	*line = NULL;
+	char	*line;
 	int		fd;
 	int		fd1;
 	int		fd2;
@@ -33,6 +33,13 @@ int		main(void)
 	int		fd5;
 
 	fd = 0; fd1 = 0; fd2 = 0; fd3= 0; fd4 = 0; fd5 = 0;
+
+	if (argc && argv)
+		;
+
+	// READ FROM STDIN
+	//while ((fd = get_next_line(fd1, &line)) == 1)
+	//	printf("STDIN i, %d:%s\n", fd, line), ft_strdel(&line);
 
 	printf("\n# define BUFF_SIZE %d\n", BUFF_SIZE);
 
@@ -43,44 +50,44 @@ int		main(void)
 
 	fd1 = open("./files/1lignes", O_RDONLY);
 	fd = get_next_line(fd1, &line);
-	printf("1lignes, 1/1, %d: %s\n", fd, line);
+	printf("1lignes, 1/1, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd2 = open("./files/3lignes", O_RDONLY);
 	fd = get_next_line(fd2, &line);
-	printf("3lignes, 1/3, %d: %s\n", fd, line);
+	printf("3lignes, 1/3, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd3 = open("./files/5lignes", O_RDONLY);
 	fd = get_next_line(fd3, &line);
-	printf("5lignes, 1/5, %d: %s\n", fd, line);
+	printf("5lignes, 1/5, %d: %s\n", fd, line); ft_strdel(&line);
 	fd = get_next_line(fd3, &line);
-	printf("5lignes, 2/5, %d: %s\n", fd, line);
+	printf("5lignes, 2/5, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd = get_next_line(fd2, &line);
-	printf("3lignes, 2/3, %d: %s\n", fd, line);
+	printf("3lignes, 2/3, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd = get_next_line(fd3, &line);
-	printf("5lignes, 3/5, %d: %s\n", fd, line);
+	printf("5lignes, 3/5, %d: %s\n", fd, line); ft_strdel(&line);
 
 	// CETTE LIGNE VA FREE LES DONNEE DE CE FD CAR IL EST TERMINé
 	fd = get_next_line(fd1, &line);
-	printf("1lignes, 2/1, %d: %s\n", fd, line);
+	printf("1lignes, 2/1, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd = get_next_line(fd3, &line);
-	printf("5lignes, 4/5, %d: %s\n", fd, line);
+	printf("5lignes, 4/5, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd = get_next_line(fd2, &line);
-	printf("3lignes, 3/3, %d: %s\n", fd, line);
+	printf("3lignes, 3/3, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd = get_next_line(fd2, &line);
-	printf("3lignes, 4/3, %d: %s\n", fd, line);
+	printf("3lignes, 4/3, %d: %s\n", fd, line); ft_strdel(&line);
 
 	fd = get_next_line(fd3, &line);
-	printf("5lignes, 5/5, %d: %s\n", fd, line);
+	printf("5lignes, 5/5, %d: %s\n", fd, line); ft_strdel(&line);
 
 	// CETTE LIGNE VA FORCER UN FREE AUTO ET TOTAL CAR 
 	// C'EST LE DERNIER FD QUI ETAIT OUVERT
 	fd = get_next_line(fd3, &line);
-	printf("5lignes, 6/5, %d: %s\n", fd, line);
+	printf("5lignes, 6/5, %d: %s\n", fd, line); ft_strdel(&line);
 
 	// LE PROGRAMME A FREE TOUS DE MANIERE AUTO CAR 
 	// AUCUN FD N'ETAIS OUVERT
@@ -90,7 +97,7 @@ int		main(void)
 	printf("si MAP = 1, on constate leffet du trim en fin de ligne\n\n");
 	fd5 = open("./test_maps/10-2.fdf", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
-		printf("10-2.fdf i, %d:%s\n", fd, line);
+		printf("10-2.fdf i, %d:%s\n", fd, line), ft_strdel(&line);
 
 	printf("\n===== TESt FD -99 et LINE = VOID =====\n");
 	printf("open('./test_maps/10-2.fdf')\n");
@@ -105,8 +112,7 @@ int		main(void)
 	printf("open('./42fc/gnl1_2.txt')\n");
 	fd5 = open("./42fc/gnl1_2.txt", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
-		printf("test i, %d:%s\n", fd, line);
-
+		printf("test i, %d:%s\n", fd, line), ft_strdel(&line);
 /*
 	// OUVERTURE DUN GROS FICHIER
 	printf("\n===== TESt GROS FICHIER =====\n");
@@ -114,9 +120,8 @@ int		main(void)
 	printf("fichier texte de 1 mo\n\n");
 	fd5 = open("./files/1mo", O_RDONLY);
 	while ((fd = get_next_line(fd5, &line)) == 1)
-		printf("2mo i, %d:%s\n", fd, line);
+		printf("2mo i, %d:%s\n", fd, line); ft_strdel(&line);
 */
-
 	// ON DEMANDE UN FREE TOTAL PLUSIEURS FOIS, PAS D'ERREUR
 	get_next_line(-10, &line);
 	get_next_line(-10, &line);

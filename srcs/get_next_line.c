@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/22 08:42:02 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/24 03:47:37 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ static int		gnl_init_one(t_gnl *g, int fd)
 	if (fd == -200)
 	{
 		*g->l = ft_strsub(g->s, 0, g->e);
-		g->t = ft_strdup(g->s);
-		free(g->s);
-		if (g->t[(g->e)] != '\0')
-			g->s = ft_strsub(g->t, (g->e + 1), (ft_strlen(g->t) - g->e - 1));
-		else
-			g->s = ft_memalloc(1);
+		g->t = g->s;
+		g->s = (g->t[g->e] != '\0') ? ft_strsub(g->t, (g->e + 1),
+		(ft_strlen(g->t) - g->e - 1)) : ft_memalloc(1);
 		free(g->t);
 		if (MAP && (f = F))
 			(f)(g->l);
@@ -80,11 +77,11 @@ static int		gnl_free(void)
 		destroy = gnl;
 		gnl = gnl->next;
 		if (destroy->s)
-			free(destroy->s);
+			ft_strdel(&destroy->s);
 		free(destroy);
 	}
 	if (gnl->fd > -100 && gnl->s)
-		free(gnl->s);
+		ft_strdel(&gnl->s);
 	free(gnl);
 	gnl_init(-200);
 	return (0);
@@ -106,7 +103,7 @@ static int		gnl_free_one(int fd)
 		next = gnl->next;
 	}
 	if (gnl->s)
-		free(gnl->s);
+		ft_strdel(&gnl->s);
 	free(gnl);
 	if (prev)
 		prev->next = next;
@@ -120,9 +117,7 @@ int				get_next_line(int fd, char **line)
 {
 	t_gnl	*g;
 
-	if (line && *line)
-		free(*line);
-	if (line && !(*line = NULL) && fd == -10)
+	if (fd == -10)
 		return (gnl_free());
 	if (fd < 0 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
 		read(fd, g->b, 0) < 0)
@@ -130,10 +125,9 @@ int				get_next_line(int fd, char **line)
 	while (!(ft_strchr(g->s, '\n')) && (g->r = read(fd, g->b, BUFF_SIZE)) > 0)
 	{
 		g->b[g->r] = '\0';
-		g->t = ft_strdup(g->s);
-		free(g->s);
+		g->t = g->s;
 		g->s = ft_strjoin(g->t, g->b);
-		free(g->t);
+		ft_strdel(&g->t);
 	}
 	g->e = -1;
 	while (g->s[++g->e] && g->s[g->e] != '\n' && g->s[g->e] != '\0')
