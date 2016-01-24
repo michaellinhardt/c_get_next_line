@@ -1,10 +1,8 @@
-==18421== Memcheck, a memory error detector
-==18421== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==18421== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
-==18421== Command: ./gnltest
-==18421== 
---18421-- run: /usr/bin/dsymutil "./gnltest"
-warning: no debug symbols in executable (-arch x86_64)
+==23903== Memcheck, a memory error detector
+==23903== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==23903== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==23903== Command: ./gnltest
+==23903== 
 
 # define BUFF_SIZE 8
 
@@ -48,31 +46,31 @@ return = -1
 
 ===== CAS DERREUR REPORTER PAR 42FC =====
 open('./42fc/gnl1_2.txt')
-==18421== 
-==18421== HEAP SUMMARY:
-==18421==     in use at exit: 26,236 bytes in 189 blocks
-==18421==   total heap usage: 365 allocs, 176 frees, 34,178 bytes allocated
-==18421== 
-==18421== 2,064 bytes in 1 blocks are possibly lost in loss record 58 of 64
-==18421==    at 0x10000A17C: malloc_zone_malloc (in /usr/local/Cellar/valgrind/3.11.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==18421==    by 0x1004F5EFD: _objc_copyClassNamesForImage (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E9182: protocols() (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E9093: readClass(objc_class*, bool, bool) (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E6C13: gc_init (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004EE24E: objc_initializeClassPair_internal(objc_class*, char const*, objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004FB132: layout_string_create (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E983C: realizeClass(objc_class*) (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E9300: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==18421==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
-==18421== 
-==18421== LEAK SUMMARY:
-==18421==    definitely lost: 0 bytes in 0 blocks
-==18421==    indirectly lost: 0 bytes in 0 blocks
-==18421==      possibly lost: 2,064 bytes in 1 blocks
-==18421==    still reachable: 0 bytes in 0 blocks
-==18421==         suppressed: 24,172 bytes in 188 blocks
-==18421== 
-==18421== For counts of detected and suppressed errors, rerun with: -v
-==18421== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 18 from 18)
+==23903== 
+==23903== HEAP SUMMARY:
+==23903==     in use at exit: 26,090 bytes in 186 blocks
+==23903==   total heap usage: 362 allocs, 176 frees, 34,032 bytes allocated
+==23903== 
+==23903== 2,064 bytes in 1 blocks are possibly lost in loss record 58 of 64
+==23903==    at 0x10000A17C: malloc_zone_malloc (in /usr/local/Cellar/valgrind/3.11.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==23903==    by 0x1004F5EFD: _objc_copyClassNamesForImage (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E9182: protocols() (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E9093: readClass(objc_class*, bool, bool) (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E6C13: gc_init (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004EE24E: objc_initializeClassPair_internal(objc_class*, char const*, objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004FB132: layout_string_create (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E983C: realizeClass(objc_class*) (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E9300: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==23903==    by 0x1004E92E9: copySwiftV1MangledName(char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==23903== 
+==23903== LEAK SUMMARY:
+==23903==    definitely lost: 0 bytes in 0 blocks
+==23903==    indirectly lost: 0 bytes in 0 blocks
+==23903==      possibly lost: 2,064 bytes in 1 blocks
+==23903==    still reachable: 0 bytes in 0 blocks
+==23903==         suppressed: 24,026 bytes in 185 blocks
+==23903== 
+==23903== For counts of detected and suppressed errors, rerun with: -v
+==23903== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 18 from 18)

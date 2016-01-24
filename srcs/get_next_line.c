@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/24 03:47:37 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/24 04:24:45 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int		gnl_init_one(t_gnl *g, int fd)
 		g->t = g->s;
 		g->s = (g->t[g->e] != '\0') ? ft_strsub(g->t, (g->e + 1),
 		(ft_strlen(g->t) - g->e - 1)) : ft_memalloc(1);
-		free(g->t);
+		ft_strdel(&g->t);
 		if (MAP && (f = F))
 			(f)(g->l);
 		return (0);
@@ -78,11 +78,11 @@ static int		gnl_free(void)
 		gnl = gnl->next;
 		if (destroy->s)
 			ft_strdel(&destroy->s);
-		free(destroy);
+		ft_memdel((void **)&destroy);
 	}
 	if (gnl->fd > -100 && gnl->s)
 		ft_strdel(&gnl->s);
-	free(gnl);
+	ft_memdel((void **)&gnl);
 	gnl_init(-200);
 	return (0);
 }
@@ -104,7 +104,7 @@ static int		gnl_free_one(int fd)
 	}
 	if (gnl->s)
 		ft_strdel(&gnl->s);
-	free(gnl);
+	ft_memdel((void **)&gnl);
 	if (prev)
 		prev->next = next;
 	gnl = gnl_init(-10);
