@@ -62,6 +62,20 @@ test: re
 	@time ./$(NAME) | /bin/cat
 	@echo "$(OK) $(GR)Done!$(WH)"
 
+42fc:
+	@echo "$(W8) $(YE)rm -rf ./rendu/(WH)"
+	@/bin/rm -rf ./rendu/
+	@echo "$(W8) $(YE)mkdir ./rendu(WH)"
+	@/bin/mkdir ./rendu
+	@echo "$(W8) $(YE)cp ./srcs/get_next_line.c ./rendu/get_next_line.c(WH)"
+	@/bin/cp ./srcs/get_next_line.c ./rendu/get_next_line.c
+	@echo "$(W8) $(YE)cp ./includes/get_next_line.h ./rendu/get_next_line.h(WH)"
+	@/bin/cp ./includes/get_next_line.h ./rendu/get_next_line.h
+	@echo "$(W8) $(YE)cp -r ./libft ./rendu/(WH)"
+	@/bin/cp -r ./libft ./rendu/
+	@echo "$(W8) $(YE)cp ./auteur ./rendu/auteur(WH)"
+	@/bin/cp ./auteur ./rendu/auteur
+
 leaks: re -leaks
 -leaks:
 	@echo "$(W8) $(YE)valgrind --leak-check=yes --track-origins=yes ./$(NAME) > ./last.valgrind 2>&1$(WH)"
