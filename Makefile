@@ -59,15 +59,16 @@ re: fclean all
 
 test: re
 	@echo "$(W8) $(YE)time ./$(NAME) | /bin/cat -e$(WH)"
-	@time ./$(NAME) | /bin/cat -e
+	@time ./$(NAME) | /bin/cat
 	@echo "$(OK) $(GR)Done!$(WH)"
 
 leaks: re -leaks
 -leaks:
 	@echo "$(W8) $(YE)valgrind --leak-check=yes --track-origins=yes ./$(NAME) > ./last.valgrind 2>&1$(WH)"
-	@valgrind --leak-check=yes --track-origins=yes ./$(NAME) > ./last.valgrind 2>&1
+	@rm -rf ./last.valgrind
+	@-valgrind --leak-check=yes --track-origins=yes ./$(NAME) > ./last.valgrind 2>&1
 	@echo "$(W8) $(YE)/bin/cat -e ./last.valgrind$(WH)"
-	@/bin/cat -e ./last.valgrind
+	@/bin/cat ./last.valgrind
 	@echo "$(OK) $(GR)Done!$(WH)"
 
 .PHONY: all clean fclean re test leaks

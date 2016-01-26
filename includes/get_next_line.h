@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "libft.h"
+# include "../libft/libft.h"
 # define BUFF_SIZE 8
 # define MAP 0
 # define F ft_bootstrap
