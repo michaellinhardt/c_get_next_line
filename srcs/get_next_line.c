@@ -14,6 +14,15 @@
 
 static t_gnl	*gnl_create(t_gnl *gnl, int fd)
 {
+	void	(*f)(char **line);
+
+	if (fd == -10 && gnl->l)
+	{
+		*gnl->l = ft_strsub(gnl->s, 0, (gnl->i));
+		if (MAP && (f = F))
+			(f)(gnl->l);
+		return (gnl);
+	}
 	if (!gnl)
 	{
 		if (!(gnl = (t_gnl *)malloc(sizeof(t_gnl) * 1)))
@@ -22,6 +31,7 @@ static t_gnl	*gnl_create(t_gnl *gnl, int fd)
 		gnl->fd = fd;
 		gnl->next = NULL;
 		gnl->t = NULL;
+		gnl->l = NULL;
 	}
 	gnl->r = 1;
 	gnl->i = 0;
@@ -52,7 +62,7 @@ static t_gnl	*gnl_choose(int fd, t_gnl *root2)
 		return (new);
 	}
 	gnl = gnl_create(gnl, fd);
-	return(gnl);
+	return (gnl);
 }
 
 static int		gnl_delete(t_gnl *erase)
@@ -104,8 +114,7 @@ static int		gnl_free(void)
 
 int				get_next_line(int fd, char **line)
 {
-	t_gnl		*g;
-	void	(*f)(char **line);
+	t_gnl	*g;
 
 	if (fd == -10)
 		return (gnl_free());
@@ -114,17 +123,17 @@ int				get_next_line(int fd, char **line)
 		return (-1);
 	while (!(ft_strchr(g->s, '\n')) && (g->r = read(fd, g->b, BUFF_SIZE)) > 0)
 	{
-		if (!(g->b[g->r] = '\0') && (g->t = g->s))
-			g->s = ft_strjoin(g->t, g->b);
+		g->b[g->r] = '\0';
+		g->t = g->s;
+		g->s = ft_strjoin(g->t, g->b);
 		ft_strdel(&g->t);
 	}
 	while (g->s[g->i] && g->s[g->i] != '\n' && g->s[g->i] != '\0')
 		g->i++;
 	if (g->r == 0 && g->i == 0)
 		return (gnl_delete(g));
-	*line = ft_strsub(g->s,0, (g->i));
-	if (MAP && (f = F))
-		(f)(line);
+	g->l = line;
+	gnl_create(g, -10);
 	g->t = g->s;
 	g->s = (g->t[g->i] == '\0') ? ft_strnew(0) : ft_strsub(g->t,
 	(g->i + 1), (ft_strlen(g->t) - g->i));
