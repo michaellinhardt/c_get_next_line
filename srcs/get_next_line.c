@@ -6,135 +6,127 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/25 02:51:53 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/28 03:31:48 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int		gnl_init_one(t_gnl *g, int fd)
+static t_gnl	*gnl_create(t_gnl *gnl, int fd)
 {
-	void	(*f)(char **line);
-
-	if (fd == -200)
+	if (!gnl)
 	{
-		*g->l = ft_strsub(g->s, 0, g->e);
-		g->t = g->s;
-		g->s = (g->t[g->e] != '\0') ? ft_strsub(g->t, (g->e + 1),
-		(ft_strlen(g->t) - g->e - 1)) : ft_memalloc(1);
-		ft_strdel(&g->t);
-		if (MAP && (f = F))
-			(f)(g->l);
-		return (0);
+		if (!(gnl = (t_gnl *)malloc(sizeof(t_gnl) * 1)))
+			return ((t_gnl *)NULL);
+		gnl->s = ft_strnew(0);
+		gnl->fd = fd;
+		gnl->next = NULL;
+		gnl->t = NULL;
 	}
-	g->s = NULL;
-	if (fd > -100)
-		if (!(g->s = ft_memalloc(1)))
-			return (1);
-	g->fd = fd;
-	g->next = NULL;
-	g->e = -1;
-	return (0);
+	gnl->r = 1;
+	gnl->i = 0;
+	ft_strdel(&gnl->t);
+	return (gnl);
 }
 
-static t_gnl	*gnl_init(int fd)
+static t_gnl	*gnl_choose(int fd, t_gnl *root2)
 {
-	static t_gnl	*root;
-	t_gnl			*gnl;
-	t_gnl			*n;
+	static t_gnl		*root;
+	t_gnl				*gnl;
+	t_gnl				*new;
 
-	if (fd == -200 && !(root = NULL))
-		return ((t_gnl *)NULL);
-	if (!root)
-	{
-		if (!(root = (t_gnl *)malloc(sizeof(t_gnl))))
-			return ((t_gnl *)NULL);
-		gnl_init_one(root, -100);
-	}
 	if (fd == -10)
 		return (root);
+	if (fd == -20)
+		return (root = root2);
+	if (!(root = gnl_create(root, fd)))
+		return ((t_gnl *)NULL);
 	gnl = root;
 	while (gnl->fd != fd && gnl->next)
 		gnl = gnl->next;
-	if (gnl->fd != fd)
+	if (gnl->fd != fd && !(new = NULL))
 	{
-		if (!(n = (t_gnl *)malloc(sizeof(t_gnl))) || (gnl_init_one(n, fd)))
+		if (!(new = gnl_create(NULL, fd)))
 			return ((t_gnl *)NULL);
-		gnl->next = n;
-		gnl = n;
+		gnl->next = new;
+		return (new);
 	}
-	return (gnl);
+	gnl = gnl_create(gnl, fd);
+	return(gnl);
+}
+
+static int		gnl_delete(t_gnl *erase)
+{
+	t_gnl		*root;
+	t_gnl		*tmp;
+	t_gnl		*prev;
+	t_gnl		*next;
+
+	root = gnl_choose(-10, NULL);
+	next = root->next;
+	prev = NULL;
+	tmp = root;
+	while (tmp->fd != erase->fd)
+	{
+		prev = tmp;
+		tmp = prev->next;
+		next = tmp->next;
+	}
+	if (prev)
+		prev->next = next;
+	else
+		gnl_choose(-20, next);
+	ft_strdel(&erase->s);
+	ft_memdel((void **)&erase);
+	return (0);
 }
 
 static int		gnl_free(void)
 {
-	t_gnl	*gnl;
-	t_gnl	*destroy;
+	t_gnl		*root;
+	t_gnl		*destroy;
 
-	gnl = gnl_init(-10);
-	while (gnl->next)
+	if (!(root = gnl_choose(-10, NULL)))
+		return (0);
+	while (root->next)
 	{
-		destroy = gnl;
-		gnl = gnl->next;
-		if (destroy->s)
-			ft_strdel(&destroy->s);
+		destroy = root;
+		root = root->next;
+		ft_strdel(&destroy->s);
+		ft_strdel(&destroy->t);
 		ft_memdel((void **)&destroy);
 	}
-	if (gnl->fd > -100 && gnl->s)
-		ft_strdel(&gnl->s);
-	ft_memdel((void **)&gnl);
-	gnl_init(-200);
-	return (0);
-}
-
-static int		gnl_free_one(int fd)
-{
-	t_gnl	*gnl;
-	t_gnl	*prev;
-	t_gnl	*next;
-
-	gnl = gnl_init(-10);
-	prev = NULL;
-	next = (gnl->next) ? gnl->next : NULL;
-	while (gnl->fd != fd)
-	{
-		prev = gnl;
-		gnl = gnl->next;
-		next = gnl->next;
-	}
-	if (gnl->s)
-		ft_strdel(&gnl->s);
-	ft_memdel((void **)&gnl);
-	if (prev)
-		prev->next = next;
-	gnl = gnl_init(-10);
-	if (!gnl->next)
-		gnl_free();
+	ft_strdel(&root->s);
+	ft_strdel(&root->t);
+	ft_memdel((void **)&root);
 	return (0);
 }
 
 int				get_next_line(int fd, char **line)
 {
-	t_gnl	*g;
+	t_gnl		*g;
+	void	(*f)(char **line);
 
 	if (fd == -10)
 		return (gnl_free());
-	if (fd < 0 || !(line) || BUFF_SIZE < 1 || !(g = gnl_init(fd)) ||
+	if (fd < 0 || !(line) || BUFF_SIZE < 1 || !(g = gnl_choose(fd, NULL)) ||
 		read(fd, g->b, 0) < 0)
 		return (-1);
 	while (!(ft_strchr(g->s, '\n')) && (g->r = read(fd, g->b, BUFF_SIZE)) > 0)
 	{
-		g->b[g->r] = '\0';
-		g->t = g->s;
-		g->s = ft_strjoin(g->t, g->b);
+		if (!(g->b[g->r] = '\0') && (g->t = g->s))
+			g->s = ft_strjoin(g->t, g->b);
 		ft_strdel(&g->t);
 	}
-	g->e = -1;
-	while (g->s[++g->e] && g->s[g->e] != '\n' && g->s[g->e] != '\0')
-		;
-	if (g->r == 0 && g->e == 0)
-		return (gnl_free_one(fd));
-	g->l = line;
-	gnl_init_one(g, -200);
+	while (g->s[g->i] && g->s[g->i] != '\n' && g->s[g->i] != '\0')
+		g->i++;
+	if (g->r == 0 && g->i == 0)
+		return (gnl_delete(g));
+	*line = ft_strsub(g->s,0, (g->i));
+	if (MAP && (f = F))
+		(f)(line);
+	g->t = g->s;
+	g->s = (g->t[g->i] == '\0') ? ft_strnew(0) : ft_strsub(g->t,
+	(g->i + 1), (ft_strlen(g->t) - g->i));
 	return (1);
 }

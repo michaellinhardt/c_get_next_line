@@ -6,21 +6,25 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:53:28 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/25 02:54:38 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/28 03:32:14 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
+# include <fcntl.h>
+# include <stdio.h>
 
 void	ft_bootstrap(char **line)
 {
 	char	*t;
 
-	t = ft_strdup(*line);
-	free(*line);
-	*line = ft_strtrim(ft_strtoupper(t));
-	free(t);
+	if (*line && ft_strlen(*line))
+	{
+		t = ft_strdup(*line);
+		free(*line);
+		*line = ft_strtrim(ft_strtoupper(t));
+		free(t);
+	}
 }
 
 int		main(int argc, char **argv)
@@ -114,6 +118,12 @@ int		main(int argc, char **argv)
 	fd5 = open("./42fc/gnl1_2.txt", O_RDONLY);
 	while ((ret = get_next_line(fd5, &line)) == 1)
 		printf("test i, %d:%s\n", ret, line), ft_strdel(&line);
+
+	printf("\n===== TESt SUR FICHIER TEST =====\n");
+	fd5 = open("./files/test", O_RDONLY);
+	while ((ret = get_next_line(fd5, &line)) == 1)
+		printf("test i, %d:%s\n", fd5, line), ft_strdel(&line);
+
 /*
 	// OUVERTURE DUN GROS FICHIER
 	printf("\n===== TESt GROS FICHIER =====\n");

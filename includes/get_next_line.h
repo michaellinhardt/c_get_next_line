@@ -6,7 +6,7 @@
 /*   By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:52:53 by mlinhard          #+#    #+#             */
-/*   Updated: 2016/01/25 02:54:12 by mlinhard         ###   ########.fr       */
+/*   Updated: 2016/01/28 03:32:05 by mlinhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include "./libft/libft.h"
+# include "libft/libft.h"
 # define BUFF_SIZE 8
 # define MAP 0
 # define F ft_bootstrap
 
 typedef struct		s_gnl
 {
-	int				fd;
-	char			*s;
-	int				e;
 	char			b[BUFF_SIZE + 1];
+	int				fd;
 	char			*t;
 	int				r;
-	char			**l;
+	int				i;
+	char			*s;
 	struct s_gnl	*next;
 }					t_gnl;
 

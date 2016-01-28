@@ -6,7 +6,7 @@
 #    By: mlinhard <mlinhard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/13 20:28:51 by mlinhard          #+#    #+#              #
-#    Updated: 2016/01/24 04:33:21 by mlinhard         ###   ########.fr        #
+#    Updated: 2016/01/28 03:28:17 by mlinhard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ $(NAME):
 	@echo "$(W8) $(YE)make -C $(LDIR)$(WH)"
 	@make -C $(LDIR)
 	@echo "$(W8) $(YE)gcc $(FLAGS) (SRC) -o $(NAME) -I$(HDIR) -L$(LDIR) -lft$(WH)"
-	@gcc $(FLAGS) $(SRC) -o $(NAME) -I$(HDIR) -L$(LDIR) -lft
+	@gcc $(FLAGS) $(SRC) -o $(NAME) -I$(HDIR) -I./ -L$(LDIR) -lft
 	@echo "$(OK) $(GR)Done!$(WH)"
 
 clean:
